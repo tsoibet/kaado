@@ -1,0 +1,27 @@
+version: "3"
+services:
+    app:
+        build:
+            context: .
+        ports:
+            - "3000:3000"
+        environment:
+            - NODE_ENV=development
+            - CHOKIDAR_USEPOLLING=true
+        volumes:
+            - .:/app
+            - node_modules:/app/node_modules
+        command: sh -c "npm run dev"
+        depends_on:
+          - mongo
+
+    mongo:
+        image: mongo
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=monuser
+            - MONGO_INITDB_ROOT_PASSWORD=monpassword
+        volumes:
+            - mongo-db:/data/db
+volumes:
+    mongo-db:
+    node_modules:
