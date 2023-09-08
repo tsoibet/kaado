@@ -1,4 +1,4 @@
-import _mongoose, { connect } from "mongoose";
+import _mongoose, { connect } from 'mongoose';
 
 declare global {
     var mongoose: {
@@ -10,7 +10,7 @@ declare global {
 const MONGODB_URI = process.env.MONGODB_URI;
 
 if (!MONGODB_URI || MONGODB_URI.length === 0) {
-    throw new Error("Please add your MongoDB URI to .env.local");
+    throw new Error('Please add your MongoDB URI to .env.local');
 }
 
 /**
@@ -26,7 +26,7 @@ if (!cached) {
 
 async function connectDB() {
     if (cached.conn) {
-        console.log("🚀 Using cached connection");
+        console.log('🚀 Using cached connection');
         return cached.conn;
     }
 
@@ -37,11 +37,11 @@ async function connectDB() {
 
         cached.promise = connect(MONGODB_URI!, opts)
             .then((mongoose) => {
-                console.log("✅ New connection established");
+                console.log('✅ New connection established');
                 return mongoose;
             })
             .catch((error) => {
-                console.error("❌ Connection to database failed");
+                console.error('❌ Connection to database failed');
                 throw error;
             });
     }
