@@ -12,7 +12,7 @@ export interface ICard extends Document {
     number: string;
     note: string;
     created_at: Date;
-    updated_at: Date;    
+    updated_at: Date;
 }
 
 const cardSchema: Schema = new Schema(
@@ -25,10 +25,9 @@ const cardSchema: Schema = new Schema(
         number: String,
         note: String,
         created_at: { type: Date, default: Date.now },
-        updated_at: { type: Date, default: Date.now },    
+        updated_at: { type: Date, default: Date.now },
     },
     { timestamps: true }
 );
 
-export default mongoose.models.Card ||
-    mongoose.model<ICard>('Card', cardSchema);
+export default mongoose.models.Card || mongoose.model<ICard>('Card', cardSchema);
