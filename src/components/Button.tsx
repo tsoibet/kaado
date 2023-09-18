@@ -1,16 +1,12 @@
 'use client';
 
-import styles from './Button.module.css';
+import { ReactNode } from 'react';
 
 type ButtonProps = {
-    icon: string;
+    icon: ReactNode;
     onClickHandler: () => void;
 };
 
 export function Button({ icon, onClickHandler }: ButtonProps) {
-    return (
-        <div onClick={() => onClickHandler()} className={styles.button}>
-            {icon}
-        </div>
-    );
+    return <div onClick={() => onClickHandler()}>{icon}</div>;
 }
