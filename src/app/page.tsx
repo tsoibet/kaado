@@ -4,6 +4,10 @@ import { ICard } from '../models/Card';
 
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
+import { AddCardIcon } from '@/components/icons/AddCardIcon';
+import { FilterIcon } from '@/components/icons/FilterIcon';
+import { SortIcon } from '@/components/icons/SortIcon';
+import { UserIcon } from '@/components/icons/UserIcon';
 
 async function getCards() {
     //TODO: Implement real getCards function
@@ -33,74 +37,12 @@ export default async function Home() {
                 <div className="text-3xl font-bold">Kaado</div>
                 <div className="flex gap-2">
                     <Link href="/cards/add">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1.5}
-                            stroke="currentColor"
-                            className="homebtn"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                            />
-                        </svg>
+                        <AddCardIcon />
                     </Link>
-                    <Button
-                        icon={
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth={1.5}
-                                stroke="currentColor"
-                                className="homebtn"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M9 12.75l3 3m0 0l3-3m-3 3v-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                />
-                            </svg>
-                        }
-                        onClickHandler={showSortDropdown}
-                    />
-                    <Button
-                        icon={
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth={1.5}
-                                stroke="currentColor"
-                                className="homebtn"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                />
-                            </svg>
-                        }
-                        onClickHandler={showFilterDropdown}
-                    />
+                    <Button icon={<SortIcon />} onClickHandler={showSortDropdown} />
+                    <Button icon={<FilterIcon />} onClickHandler={showFilterDropdown} />
                     <Link href="/user">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1.5}
-                            stroke="currentColor"
-                            className="homebtn"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
-                            />
-                        </svg>
+                        <UserIcon />
                     </Link>
                 </div>
             </header>
