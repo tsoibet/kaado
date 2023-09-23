@@ -1,11 +1,62 @@
-import styles from './page.module.css';
+import Link from 'next/link';
 
-export default function Home() {
+import { ICard } from '../models/Card';
+
+import { Button } from '@/components/Button';
+import { Card } from '@/components/Card';
+import { AddCardIcon } from '@/components/icons/AddCardIcon';
+import { FilterIcon } from '@/components/icons/FilterIcon';
+import { SortIcon } from '@/components/icons/SortIcon';
+import { UserIcon } from '@/components/icons/UserIcon';
+
+async function getCards() {
+    //TODO: Implement real getCards function
+    console.log('getCards');
+    const cards: ICard[] = [];
+    return cards;
+}
+
+async function showSortDropdown() {
+    'use server';
+    //TODO: Implement real showSortDropdown function
+    console.log('showSortDropdown');
+}
+
+async function showFilterDropdown() {
+    'use server';
+    //TODO: Implement real showFilterDropdown function
+    console.log('showFilterDropdown');
+}
+
+export default async function Home() {
+    const cards = await getCards();
+
     return (
-        <main className={styles.main}>
-            <div className={styles.description}>
-                <p>Kaado</p>
-            </div>
-        </main>
+        <div className="w-96 min-h-screen p-4 grid grid-rows-[auto_1fr] gap-4">
+            <header className="flex justify-between items-center">
+                <div className="text-3xl font-bold">Kaado</div>
+                <div className="flex gap-2">
+                    <Link href="/cards/add">
+                        <AddCardIcon />
+                    </Link>
+                    <Button icon={<SortIcon />} onClickHandler={showSortDropdown} />
+                    <Button icon={<FilterIcon />} onClickHandler={showFilterDropdown} />
+                    <Link href="/user">
+                        <UserIcon />
+                    </Link>
+                </div>
+            </header>
+            {cards.length ? (
+                <div className="justify-self-center flex flex-col">
+                    {cards.map((card) => (
+                        <Card key={card.id} card={card} />
+                    ))}
+                </div>
+            ) : (
+                <div className="p-4 self-center">
+                    Keep all the cards you use every day all in one place.
+                </div>
+            )}
+        </div>
     );
 }
