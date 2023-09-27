@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+const colors = require('tailwindcss/colors');
+
 module.exports = {
     content: [
         './app/**/*.{js,ts,jsx,tsx,mdx}', // Note the addition of the `app` directory.
@@ -22,6 +25,8 @@ module.exports = {
                 800: '#27272a',
                 950: '#09090b',
             },
+            info: colors.blue,
+            danger: colors.red,
         },
         extend: {},
     },
