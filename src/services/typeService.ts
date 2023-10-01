@@ -125,12 +125,12 @@ export async function deleteType(id: string) {
         const type = await TypeModel.findById<IType>(parsedId);
         if (type) {
             if (!user.equals(type.user)) {
-                return { error: 'Unauthorized action' }
+                return { error: 'Unauthorized action' };
             }
             if (type.isDefault) {
-                return { error: 'Cannot delete default type' }
+                return { error: 'Cannot delete default type' };
             }
-            const result = await type.deleteOne()
+            const result = await type.deleteOne();
             return { result };
         } else {
             return { error: 'Type not found' };
