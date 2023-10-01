@@ -19,7 +19,6 @@ export default async function Page() {
                 </div>
                 <Link href="/type/new">
                     <div className="w-52 mt-4 mx-auto py-2 border rounded-lg text-lg">
-                        {' '}
                         <span className="text-info-600">Create new</span>
                     </div>
                 </Link>
