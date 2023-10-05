@@ -38,7 +38,7 @@ export default async function Home() {
                     </Link>
                 </div>
             </header>
-            {cards ? (
+            {cards?.length ? (
                 <div className="justify-self-center flex flex-col">
                     {cards.map((card) => (
                         <Card key={card.id} card={card} />
