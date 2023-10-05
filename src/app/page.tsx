@@ -1,20 +1,12 @@
 import Link from 'next/link';
 
-import { ICard } from '../models/Card';
-
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { AddCardIcon } from '@/components/icons/AddCardIcon';
 import { FilterIcon } from '@/components/icons/FilterIcon';
 import { SortIcon } from '@/components/icons/SortIcon';
 import { UserIcon } from '@/components/icons/UserIcon';
-
-async function getCards() {
-    //TODO: Implement real getCards function
-    console.log('getCards');
-    const cards: ICard[] = [];
-    return cards;
-}
+import { getCards } from '@/services/cardService';
 
 async function showSortDropdown() {
     'use server';
@@ -29,7 +21,7 @@ async function showFilterDropdown() {
 }
 
 export default async function Home() {
-    const cards = await getCards();
+    const { cards } = await getCards();
 
     return (
         <div className="w-96 min-h-screen p-4 grid grid-rows-[auto_1fr] gap-4">
@@ -46,7 +38,7 @@ export default async function Home() {
                     </Link>
                 </div>
             </header>
-            {cards.length ? (
+            {cards ? (
                 <div className="justify-self-center flex flex-col">
                     {cards.map((card) => (
                         <Card key={card.id} card={card} />
