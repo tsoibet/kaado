@@ -73,9 +73,12 @@ export async function authenticateUser(name: string, password: string) {
         if (!user) {
             return { error: 'User not found' };
         }
-        return { result: await bcrypt.compare(password, user.password) };
+        if (await bcrypt.compare(password, user.password)){
+            return { result: { id: user._id, name: user.name } };
+        }
+        return { error: 'Authentication failed' };
     } catch (error) {
-        return { error: 'Deletion failed' };
+        return { error: 'Authentication failed' };
     }
 }
 
