@@ -1,6 +1,6 @@
 import { revalidatePath } from 'next/cache';
-import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import React from 'react';
 
 import { DeleteButton } from './DeleteButton';
@@ -14,8 +14,8 @@ import { getType } from '@/services/typeService';
 export default async function Page({ params }: { params: { id: string } }) {
     const { card } = await getCard(params.id);
     if (!card) {
-      notFound();
-  }
+        notFound();
+    }
 
     const backBtn = (
         <Link href={`/cards/${params.id}`}>
