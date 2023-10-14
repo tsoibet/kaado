@@ -52,11 +52,7 @@ export const Form = ({
         <>
             <TopNav right={getAddBtn()} />
             <div className="text-center">
-                <div className="text-2xl m-4">
-                    Add New
-                    <br />
-                    Card Type
-                </div>
+                <div className="text-2xl m-4">Add New Card Type</div>
                 <div className="text-2xl m-4 mt-8">Card Type Name</div>
                 <div>
                     <input
