@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import React from 'react';
 
 import { TopNav } from '@/components/TopNav';
@@ -9,6 +10,9 @@ import { getCard } from '@/services/cardService';
 
 export default async function Page({ params }: { params: { id: string } }) {
     const { card } = await getCard(params.id);
+    if (!card) {
+        notFound();
+    }
 
     const backBtn = (
         <Link href="/">
@@ -22,7 +26,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                 {/* TODO: Implement share card function  */}
                 <ShareIcon />
             </Link>
-            <Link href={`/detail/${params.id}`}>
+            <Link href={`/cards/detail/${params.id}`}>
                 <InfoIcon />
             </Link>
         </div>
