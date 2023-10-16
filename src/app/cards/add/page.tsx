@@ -37,7 +37,7 @@ export default async function Page() {
         return { id: createdCard?._id, error };
     };
 
-    const { types, error } = await getTypes();
+    const { types } = await getTypes();
 
-    return <Form handleCreateCard={handleCreateCard} getTypesResult={{ types, error }} />;
+    return <Form handleCreateCard={handleCreateCard} getTypesResult={{ types }} />;
 }

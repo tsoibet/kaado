@@ -29,7 +29,6 @@ export function Form({
     }) => Promise<{ id?: string; error?: string }>;
     getTypesResult: {
         types?: IType[];
-        error?: any;
     };
 }) {
     const router = useRouter();
@@ -46,9 +45,13 @@ export function Form({
     const [loading, setLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
 
-    function handleImgFrontChange(event: ChangeEvent<HTMLInputElement>) {
+    function handleImgChange(event: ChangeEvent<HTMLInputElement>) {
         const file = event.target.files && event.target.files[0];
         if (!file) {
+            if (progress) {
+                setCard({ ...card, image_back: '' });
+                return;
+            }
             setCard({ ...card, image_front: '' });
             return;
         }
@@ -57,33 +60,14 @@ export function Form({
             reader,
             file,
             ({ resizedImgStr, error }: { resizedImgStr?: string; error?: string }) => {
-                if (!resizedImgStr) {
+                if (error) {
                     console.log(error);
-                    setCard({ ...card, image_front: '' });
+                }
+                if (progress) {
+                    setCard({ ...card, image_back: resizedImgStr ?? '' });
                     return;
                 }
-                setCard({ ...card, image_front: resizedImgStr });
-            }
-        );
-    }
-
-    function handleImgBackChange(event: ChangeEvent<HTMLInputElement>) {
-        const file = event.target.files && event.target.files[0];
-        if (!file) {
-            setCard({ ...card, image_back: '' });
-            return;
-        }
-        const reader = new FileReader();
-        convertImgToBase64(
-            reader,
-            file,
-            ({ resizedImgStr, error }: { resizedImgStr?: string; error?: string }) => {
-                if (!resizedImgStr) {
-                    console.log(error);
-                    setCard({ ...card, image_back: '' });
-                    return;
-                }
-                setCard({ ...card, image_back: resizedImgStr });
+                setCard({ ...card, image_front: resizedImgStr ?? '' });
             }
         );
     }
@@ -163,7 +147,7 @@ export function Form({
                     id="image_front"
                     type="file"
                     accept="image/*"
-                    onChange={(event) => handleImgFrontChange(event)}
+                    onChange={(event) => handleImgChange(event)}
                     required
                     className="border border-primary-400 rounded text-sm"
                 />
@@ -187,7 +171,7 @@ export function Form({
                     id="image_back"
                     type="file"
                     accept="image/*"
-                    onChange={(event) => handleImgBackChange(event)}
+                    onChange={(event) => handleImgChange(event)}
                     required
                     className="border border-primary-400 rounded text-sm"
                 />
@@ -271,8 +255,8 @@ export function Form({
         } else {
             inputfields = (
                 <>
-                    <p className="h-5 text-sm text-danger-600">Error</p>
-                    <p className="h-5 text-sm text-danger-600">Please try again later.</p>
+                    <p className="h-5 text-sm text-danger-600">Error: Unable to add card details</p>
+                    <p className="h-5 text-sm text-center text-danger-600">Please try again later. <br/>You may still add the card with photos only.</p>
                 </>
             );
         }
