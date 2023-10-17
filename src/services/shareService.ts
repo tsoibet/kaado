@@ -135,7 +135,7 @@ export async function executeSharing(id: string) {
         if (!defaultType) {
             return { error: 'Unable to copy card' };
         }
-        const newCard = await createCard(new CardAdaptor({image_front: card.image_front, image_back: card.image_back, name: card.name, type_id: defaultType._id!, number: card.number, note: card.note}));
+        const {card: newCard, error} = await createCard(new CardAdaptor({image_front: card.image_front, image_back: card.image_back, name: card.name, type_id: defaultType._id!, number: card.number, note: card.note}));
         if (newCard) {
             sharing.isComplete = true;
             sharing.recipient = user;
@@ -145,6 +145,7 @@ export async function executeSharing(id: string) {
                 card: newCard
             }
         } else {
+            console.log(error);
             return { error: 'Unable to copy card' }
         }
     } catch (error) {
