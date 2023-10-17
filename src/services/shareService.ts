@@ -3,7 +3,7 @@ import connectDB from '../lib/dbConnect';
 import { stringToObjectId } from '../lib/utils';
 
 import CardAdaptor from './CardAdaptor';
-import { createCard } from './cardService';
+import { createCard, getCard } from './cardService';
 import { getTypes } from './typeService';
 
 import { ICard } from '@/models/Card';
@@ -34,7 +34,7 @@ export async function createSharing(cardId: string, validHours = (24*7)) {
     try {
         await connectDB();
         
-        const card = stringToObjectId(cardId);
+        const {card} = await getCard(cardId);
 
         if (!card) {
             return { error: 'card not found' };
