@@ -18,7 +18,8 @@ export async function getCards() {
 
         return { cards };
     } catch (error) {
-        return { error };
+        console.log(error);
+        return { error: 'Failed to get cards' };
     }
 }
 
@@ -42,7 +43,8 @@ export async function getCard(id: string) {
             return { error: 'Card not found' };
         }
     } catch (error) {
-        return { error };
+        console.log(error);
+        return { error: 'Failed to get card' };
     }
 }
 
@@ -98,7 +100,8 @@ export async function createCard({
         });
         return { card };
     } catch (error) {
-        return { error };
+        console.log(error);
+        return { error: 'Failed to add card' };
     }
 }
 
@@ -162,7 +165,8 @@ export async function updateCard(
             return { error: 'Card not found' }; //??
         }
     } catch (error) {
-        return { error };
+        console.log(error);
+        return { error: 'Failed to update card' };
     }
 }
 
@@ -190,6 +194,7 @@ export async function deleteCard(id: string) {
             return { error: 'Card not found' };
         }
     } catch (error) {
+        console.log(error);
         return { error: 'Failed to delete card' };
     }
 }
