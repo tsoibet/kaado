@@ -29,7 +29,7 @@ export function Form() {
             setLoading(false);
 
             if (res && !res.error) {
-                router.replace(callbackUrl); // what is base url
+                router.replace(callbackUrl);
             } else {
                 setErrorMsg('Username or passward is incorrect.');
             }
