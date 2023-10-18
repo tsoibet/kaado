@@ -1,81 +1,93 @@
 'use client';
 
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { ChangeEvent, useState } from 'react';
 
-export const LoginForm = () => {
-    const router = useRouter();
+export function Form() {
     const [loading, setLoading] = useState(false);
-    const [formValues, setFormValues] = useState({
+    const [formValues, setFormValues] = useState<{ username: string; password: string }>({
         username: '',
         password: '',
     });
     const [errorMsg, setErrorMsg] = useState('');
 
+    const router = useRouter();
     const searchParams = useSearchParams();
-    const callbackUrl = searchParams.get('callbackUrl') || '/member';
+    const callbackUrl = searchParams.get('callbackUrl') || '/';
 
-    const onSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    async function handleSubmit(event: React.FormEvent) {
+        event.preventDefault();
         try {
             setLoading(true);
-            setFormValues({ username: '', password: '' });
-
             const res = await signIn('credentials', {
                 redirect: false,
                 username: formValues.username,
                 password: formValues.password,
                 callbackUrl,
             });
-
             setLoading(false);
 
-            if (!res?.error) {
-                router.push(callbackUrl);
+            if (res && !res.error) {
+                router.replace(callbackUrl); // what is base url
             } else {
-                setErrorMsg('invalid username or password');
+                setErrorMsg('Username or passward is incorrect.');
             }
         } catch (error: any) {
             setLoading(false);
-            setErrorMsg(error);
+            setErrorMsg('Failed to login.');
+            console.log(error);
         }
-    };
+    }
 
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    function handleChange(event: ChangeEvent<HTMLInputElement>) {
         const { name, value } = event.target;
         setFormValues({ ...formValues, [name]: value });
-    };
+    }
 
     return (
-        <form onSubmit={onSubmit}>
-            {errorMsg && <p className="text-center bg-danger-300">{errorMsg}</p>}
-            <div>
+        <form onSubmit={handleSubmit} className="w-10/12 flex flex-col items-center gap-5">
+            <div className="w-full flex flex-col gap-1">
+                <label htmlFor="number" className="text-xs self-start">
+                    USERNAME
+                </label>
                 <input
                     required
                     name="username"
+                    type="text"
                     value={formValues.username}
                     onChange={handleChange}
-                    placeholder="username"
+                    disabled={loading}
+                    className="py-1 px-3 rounded-lg border border-primary-600"
                 />
             </div>
-            <div>
+            <div className="w-full flex flex-col gap-1">
+                <label htmlFor="number" className="text-xs self-start">
+                    PASSWORD
+                </label>
                 <input
                     required
-                    type="password"
                     name="password"
+                    type="password"
                     value={formValues.password}
                     onChange={handleChange}
-                    placeholder="Password"
+                    disabled={loading}
+                    autoComplete="off"
+                    className="py-1 px-3 rounded-lg border border-primary-600"
                 />
             </div>
-            <button
-                type="submit"
-                className={`${loading ? 'bg-primary-600' : 'bg-info-600'} text-primary-50`}
-                disabled={loading}
-            >
-                {loading ? 'loading...' : 'Sign In'}
-            </button>
+            <div className="w-full flex flex-col items-center gap-1">
+                <p className="h-4 text-xs text-danger-600">{errorMsg}</p>
+                <button
+                    type="submit"
+                    className={`w-full py-1.5 px-3 rounded-lg bg-info-600 text-primary-50 ${
+                        loading && 'bg-primary-400'
+                    }`}
+                    disabled={loading}
+                >
+                    Sign in
+                </button>
+            </div>
         </form>
     );
-};
+}
