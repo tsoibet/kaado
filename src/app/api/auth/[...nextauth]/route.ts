@@ -34,10 +34,10 @@ export const authOptions: AuthOptions = {
         }),
     ],
     callbacks: {
-        async jwt({ token, account }) {
+        async jwt({ token, user }) {
             // Persist the OAuth access_token to the token right after signin
-            if (account) {
-                token.userId = account.providerAccountId;
+            if (user) {
+                token.userId = user.id;
             }
             return token;
         },
