@@ -7,21 +7,30 @@ import { stringToObjectId } from '../lib/utils';
 import TypeModel from '@/models/Type';
 import UserModel, { IUser } from '@/models/User';
 
-export async function getUsers() {
+export interface UserBasicInfo {
+    _id: string;
+    name: string;
+}
+
+export async function getUsers(): Promise<{ users?: UserBasicInfo[]; error?: string }> {
     try {
         await connectDB();
 
-        const users = await UserModel.find<IUser>({}, 'name');
+        const users = await UserModel.find<UserBasicInfo>({}, 'name');
 
         return {
             users,
         };
     } catch (error) {
-        return { error };
+        console.log(error);
+        return { error: 'Server error' };
     }
 }
 
-export async function createUser(name: string, password: string) {
+export async function createUser(
+    name: string,
+    password: string
+): Promise<{ user?: UserBasicInfo; error?: string }> {
     try {
         await connectDB();
 
@@ -37,12 +46,18 @@ export async function createUser(name: string, password: string) {
                 _id: user._id,
             },
         };
-    } catch (error) {
-        return { error };
+    } catch (error: any) {
+        if (error.code === 11000) {
+            return { error: 'Username already exists' };
+        }
+        console.log(error);
+        return { error: 'Server error' };
     }
 }
 
-export async function getUser(userID = '123456789012') {
+export async function getUser(
+    userID = '123456789012'
+): Promise<{ user?: UserBasicInfo; error?: string }> {
     try {
         await connectDB();
         // TODO: Get USER_ID from session
@@ -55,17 +70,24 @@ export async function getUser(userID = '123456789012') {
         const user = await UserModel.findById<IUser>(userId, 'name');
         if (user) {
             return {
-                user,
+                user: {
+                    name: user.name,
+                    _id: user._id,
+                },
             };
         } else {
             return { error: 'User not found' };
         }
     } catch (error) {
-        return { error };
+        console.log(error);
+        return { error: 'Server error' };
     }
 }
 
-export async function authenticateUser(name: string, password: string) {
+export async function authenticateUser(
+    name: string,
+    password: string
+): Promise<{ user?: UserBasicInfo; error?: string }> {
     try {
         await connectDB();
 
@@ -73,12 +95,13 @@ export async function authenticateUser(name: string, password: string) {
         if (!user) {
             return { error: 'User not found' };
         }
-        if (await bcrypt.compare(password, user.password)){
-            return { result: { id: user._id, name: user.name } };
+        if (await bcrypt.compare(password, user.password)) {
+            return { user: { _id: String(user._id), name: user.name } };
         }
         return { error: 'Authentication failed' };
     } catch (error) {
-        return { error: 'Authentication failed' };
+        console.log(error);
+        return { error: 'Server error' };
     }
 }
 
@@ -86,7 +109,7 @@ export async function updatePassword(
     oldPassword: string,
     newPassword: string,
     userID = '123456789012'
-) {
+): Promise<{ user?: UserBasicInfo; error?: string }> {
     try {
         await connectDB();
         // TODO: Get USER_ID from session
@@ -120,11 +143,15 @@ export async function updatePassword(
             return { error: 'User not found' };
         }
     } catch (error) {
-        return { error };
+        console.log(error);
+        return { error: 'Server error' };
     }
 }
 
-export async function deleteUser(password: string, userID = '123456789012') {
+export async function deleteUser(
+    password: string,
+    userID = '123456789012'
+): Promise<{ user?: UserBasicInfo; error?: string }> {
     try {
         await connectDB();
         // TODO: Get USER_ID from session
@@ -150,6 +177,7 @@ export async function deleteUser(password: string, userID = '123456789012') {
             },
         };
     } catch (error) {
-        return { error: 'Deletion failed' };
+        console.log(error);
+        return { error: 'Server error' };
     }
 }
