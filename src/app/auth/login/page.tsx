@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 
-import { Form } from './Form';
+import { LoginForm } from './LoginForm';
 
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
@@ -18,7 +18,7 @@ export default async function Page() {
                 <p className="text-4xl">Welcome to</p>
                 <p className="text-4xl">KAADO</p>
             </div>
-            <Form />
+            <LoginForm />
             <div className="flex flex-col items-center gap-1">
                 <p>Don&apos;t have an account?</p>
                 <Link href="/auth/register">

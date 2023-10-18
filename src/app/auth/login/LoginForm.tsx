@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { ChangeEvent, useState } from 'react';
 
-export function Form() {
+export function LoginForm() {
     const [loading, setLoading] = useState(false);
     const [formValues, setFormValues] = useState<{ username: string; password: string }>({
         username: '',
