@@ -1,9 +1,11 @@
 'use server';
 import bcrypt from 'bcrypt';
+import { getServerSession } from 'next-auth';
 
 import connectDB from '../lib/dbConnect';
 import { stringToObjectId } from '../lib/utils';
 
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import TypeModel from '@/models/Type';
 import UserModel, { IUser } from '@/models/User';
 
@@ -60,9 +62,11 @@ export async function getUser(
 ): Promise<{ user?: UserBasicInfo; error?: string }> {
     try {
         await connectDB();
-        // TODO: Get USER_ID from session
-        const userId = stringToObjectId(userID);
-
+        const session = await getServerSession(authOptions);
+        if (!session) {
+            return { error: 'User not found' };
+        }
+        const userId = stringToObjectId(session.user.id);
         if (!userId) {
             return { error: 'User not found' };
         }
@@ -112,9 +116,11 @@ export async function updatePassword(
 ): Promise<{ user?: UserBasicInfo; error?: string }> {
     try {
         await connectDB();
-        // TODO: Get USER_ID from session
-        const userId = stringToObjectId(userID);
-
+        const session = await getServerSession(authOptions);
+        if (!session) {
+            return { error: 'User not found' };
+        }
+        const userId = stringToObjectId(session.user.id);
         if (!userId) {
             return { error: 'User not found' };
         }
@@ -154,9 +160,11 @@ export async function deleteUser(
 ): Promise<{ user?: UserBasicInfo; error?: string }> {
     try {
         await connectDB();
-        // TODO: Get USER_ID from session
-        const userId = stringToObjectId(userID);
-
+        const session = await getServerSession(authOptions);
+        if (!session) {
+            return { error: 'User not found' };
+        }
+        const userId = stringToObjectId(session.user.id);
         if (!userId) {
             return { error: 'user not found' };
         }

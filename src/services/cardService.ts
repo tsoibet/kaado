@@ -1,5 +1,8 @@
 'use server';
 
+import { getServerSession } from 'next-auth';
+
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import connectDB from '@/lib/dbConnect';
 import { stringToObjectId } from '@/lib/utils';
 import CardModel, { ICard } from '@/models/Card';
@@ -8,8 +11,11 @@ import TypeModel, { IType } from '@/models/Type';
 export async function getCards() {
     try {
         await connectDB();
-        // TODO: Get USER_ID from session
-        const user = stringToObjectId('123456789012');
+        const session = await getServerSession(authOptions);
+        if (!session) {
+            return { error: 'User not found' };
+        }
+        const user = stringToObjectId(session.user.id);
         if (!user) {
             return { error: 'User not found' };
         }
@@ -26,8 +32,11 @@ export async function getCards() {
 export async function getCard(id: string) {
     try {
         await connectDB();
-        // TODO: Get USER_ID from session
-        const user = stringToObjectId('123456789012');
+        const session = await getServerSession(authOptions);
+        if (!session) {
+            return { error: 'User not found' };
+        }
+        const user = stringToObjectId(session.user.id);
         if (!user) {
             return { error: 'User not found' };
         }
@@ -65,8 +74,11 @@ export async function createCard({
 }) {
     try {
         await connectDB();
-        // TODO: Get USER_ID from session
-        const user = stringToObjectId('123456789012');
+        const session = await getServerSession(authOptions);
+        if (!session) {
+            return { error: 'User not found' };
+        }
+        const user = stringToObjectId(session.user.id);
         if (!user) {
             return { error: 'User not found' };
         }
@@ -125,8 +137,11 @@ export async function updateCard(
 ) {
     try {
         await connectDB();
-        // TODO: Get USER_ID from session
-        const user = stringToObjectId('123456789012');
+        const session = await getServerSession(authOptions);
+        if (!session) {
+            return { error: 'User not found' };
+        }
+        const user = stringToObjectId(session.user.id);
         if (!user) {
             return { error: 'User not found' };
         }
@@ -173,8 +188,11 @@ export async function updateCard(
 export async function deleteCard(id: string) {
     try {
         await connectDB();
-        // TODO: Get USER_ID from session
-        const user = stringToObjectId('123456789012');
+        const session = await getServerSession(authOptions);
+        if (!session) {
+            return { error: 'User not found' };
+        }
+        const user = stringToObjectId(session.user.id);
         if (!user) {
             return { error: 'User not found' };
         }
