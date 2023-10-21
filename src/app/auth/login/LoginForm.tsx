@@ -48,11 +48,12 @@ export function LoginForm() {
     return (
         <form onSubmit={handleSubmit} className="w-10/12 flex flex-col items-center gap-5">
             <div className="w-full flex flex-col gap-1">
-                <label htmlFor="number" className="text-xs self-start">
+                <label htmlFor="username" className="text-xs self-start">
                     USERNAME
                 </label>
                 <input
                     required
+                    id="username"
                     name="username"
                     type="text"
                     value={formValues.username}
@@ -62,11 +63,12 @@ export function LoginForm() {
                 />
             </div>
             <div className="w-full flex flex-col gap-1">
-                <label htmlFor="number" className="text-xs self-start">
+                <label htmlFor="password" className="text-xs self-start">
                     PASSWORD
                 </label>
                 <input
                     required
+                    id="password"
                     name="password"
                     type="password"
                     value={formValues.password}
