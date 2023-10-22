@@ -57,9 +57,7 @@ export async function createUser(
     }
 }
 
-export async function getUser(
-    userID = '123456789012'
-): Promise<{ user?: UserBasicInfo; error?: string }> {
+export async function getUser(): Promise<{ user?: UserBasicInfo; error?: string }> {
     try {
         await connectDB();
         const session = await getServerSession(authOptions);
@@ -111,8 +109,7 @@ export async function authenticateUser(
 
 export async function updatePassword(
     oldPassword: string,
-    newPassword: string,
-    userID = '123456789012'
+    newPassword: string
 ): Promise<{ user?: UserBasicInfo; error?: string }> {
     try {
         await connectDB();
@@ -155,8 +152,7 @@ export async function updatePassword(
 }
 
 export async function deleteUser(
-    password: string,
-    userID = '123456789012'
+    password: string
 ): Promise<{ user?: UserBasicInfo; error?: string }> {
     try {
         await connectDB();
