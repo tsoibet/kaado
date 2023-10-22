@@ -1,9 +1,11 @@
 'use server';
 import bcrypt from 'bcrypt';
+import { getServerSession } from 'next-auth';
 
 import connectDB from '../lib/dbConnect';
 import { stringToObjectId } from '../lib/utils';
 
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import TypeModel from '@/models/Type';
 import UserModel, { IUser } from '@/models/User';
 
@@ -55,14 +57,14 @@ export async function createUser(
     }
 }
 
-export async function getUser(
-    userID = '123456789012'
-): Promise<{ user?: UserBasicInfo; error?: string }> {
+export async function getUser(): Promise<{ user?: UserBasicInfo; error?: string }> {
     try {
         await connectDB();
-        // TODO: Get USER_ID from session
-        const userId = stringToObjectId(userID);
-
+        const session = await getServerSession(authOptions);
+        if (!session) {
+            return { error: 'User not found' };
+        }
+        const userId = stringToObjectId(session.user.id);
         if (!userId) {
             return { error: 'User not found' };
         }
@@ -107,14 +109,15 @@ export async function authenticateUser(
 
 export async function updatePassword(
     oldPassword: string,
-    newPassword: string,
-    userID = '123456789012'
+    newPassword: string
 ): Promise<{ user?: UserBasicInfo; error?: string }> {
     try {
         await connectDB();
-        // TODO: Get USER_ID from session
-        const userId = stringToObjectId(userID);
-
+        const session = await getServerSession(authOptions);
+        if (!session) {
+            return { error: 'User not found' };
+        }
+        const userId = stringToObjectId(session.user.id);
         if (!userId) {
             return { error: 'User not found' };
         }
@@ -149,14 +152,15 @@ export async function updatePassword(
 }
 
 export async function deleteUser(
-    password: string,
-    userID = '123456789012'
+    password: string
 ): Promise<{ user?: UserBasicInfo; error?: string }> {
     try {
         await connectDB();
-        // TODO: Get USER_ID from session
-        const userId = stringToObjectId(userID);
-
+        const session = await getServerSession(authOptions);
+        if (!session) {
+            return { error: 'User not found' };
+        }
+        const userId = stringToObjectId(session.user.id);
         if (!userId) {
             return { error: 'user not found' };
         }

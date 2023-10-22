@@ -1,4 +1,6 @@
 'use server';
+import { getServerSession } from 'next-auth';
+
 import connectDB from '../lib/dbConnect';
 import { stringToObjectId } from '../lib/utils';
 
@@ -6,16 +8,18 @@ import CardAdaptor from './CardAdaptor';
 import { createCard, getCard } from './cardService';
 import { getTypes } from './typeService';
 
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { ICard } from '@/models/Card';
 import SharingModel, { ISharing } from '@/models/Sharing';
 
 export async function getSharings() {
     try {
         await connectDB();
-
-        // TODO: Get USER_ID from session
-        const user = stringToObjectId('123456789012');
-
+        const session = await getServerSession(authOptions);
+        if (!session) {
+            return { error: 'User not found' };
+        }
+        const user = stringToObjectId(session.user.id);
         if (!user) {
             return { error: 'user not found' };
         }
@@ -40,9 +44,12 @@ export async function createSharing(cardId: string, validHours = 24 * 7) {
             return { error: 'card not found' };
         }
 
-        // TODO: Get USER_ID from session
-        const user = stringToObjectId('123456789012');
+        const session = await getServerSession(authOptions);
+        if (!session) {
+            return { error: 'User not found' };
+        }
 
+        const user = stringToObjectId(session.user.id);
         if (!user) {
             return { error: 'user not found' };
         }
@@ -62,9 +69,11 @@ export async function createSharing(cardId: string, validHours = 24 * 7) {
 export async function getSharing(id: string) {
     try {
         await connectDB();
-        // TODO: Get USER_ID from session
-        const user = stringToObjectId('123456789012');
-
+        const session = await getServerSession(authOptions);
+        if (!session) {
+            return { error: 'User not found' };
+        }
+        const user = stringToObjectId(session.user.id);
         if (!user) {
             return { error: 'user not found' };
         }
@@ -117,9 +126,13 @@ export async function fetchSharing(id: string) {
 export async function executeSharing(id: string) {
     try {
         await connectDB();
-        // TODO: Get USER_ID from session
-        const user = stringToObjectId('123456789012');
 
+        const session = await getServerSession(authOptions);
+        if (!session) {
+            return { error: 'User not found' };
+        }
+
+        const user = stringToObjectId(session.user.id);
         if (!user) {
             return { error: 'user not found' };
         }
@@ -169,9 +182,13 @@ export async function executeSharing(id: string) {
 export async function deleteSharing(id: string) {
     try {
         await connectDB();
-        // TODO: Get USER_ID from session
-        const user = stringToObjectId('123456789012');
 
+        const session = await getServerSession(authOptions);
+        if (!session) {
+            return { error: 'User not found' };
+        }
+
+        const user = stringToObjectId(session.user.id);
         if (!user) {
             return { error: 'user not found' };
         }

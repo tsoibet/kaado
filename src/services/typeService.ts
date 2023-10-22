@@ -1,15 +1,21 @@
 'use server';
+import { getServerSession } from 'next-auth';
+
 import connectDB from '../lib/dbConnect';
 import { stringToObjectId } from '../lib/utils';
 
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import TypeModel, { IType } from '@/models/Type';
 
 export async function getTypes() {
     try {
         await connectDB();
 
-        // TODO: Get USER_ID from session
-        const user = stringToObjectId('123456789012');
+        const session = await getServerSession(authOptions);
+        if (!session) {
+            return { error: 'User not found' };
+        }
+        const user = stringToObjectId(session.user.id);
 
         if (!user) {
             return { error: 'user not found' };
@@ -28,9 +34,11 @@ export async function getTypes() {
 export async function createType(name: string, isDefault = false) {
     try {
         await connectDB();
-        // TODO: Get USER_ID from session
-        const user = stringToObjectId('123456789012');
-
+        const session = await getServerSession(authOptions);
+        if (!session) {
+            return { error: 'User not found' };
+        }
+        const user = stringToObjectId(session.user.id);
         if (!user) {
             return { error: 'user not found' };
         }
@@ -48,9 +56,11 @@ export async function createType(name: string, isDefault = false) {
 export async function getType(id: string) {
     try {
         await connectDB();
-        // TODO: Get USER_ID from session
-        const user = stringToObjectId('123456789012');
-
+        const session = await getServerSession(authOptions);
+        if (!session) {
+            return { error: 'User not found' };
+        }
+        const user = stringToObjectId(session.user.id);
         if (!user) {
             return { error: 'user not found' };
         }
@@ -76,9 +86,11 @@ export async function getType(id: string) {
 export async function updateType(id: string, { name }: { name?: string }) {
     try {
         await connectDB();
-        // TODO: Get USER_ID from session
-        const user = stringToObjectId('123456789012');
-
+        const session = await getServerSession(authOptions);
+        if (!session) {
+            return { error: 'User not found' };
+        }
+        const user = stringToObjectId(session.user.id);
         if (!user) {
             return { error: 'user not found' };
         }
@@ -110,9 +122,11 @@ export async function updateType(id: string, { name }: { name?: string }) {
 export async function deleteType(id: string) {
     try {
         await connectDB();
-        // TODO: Get USER_ID from session
-        const user = stringToObjectId('123456789012');
-
+        const session = await getServerSession(authOptions);
+        if (!session) {
+            return { error: 'User not found' };
+        }
+        const user = stringToObjectId(session.user.id);
         if (!user) {
             return { error: 'user not found' };
         }
