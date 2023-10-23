@@ -18,7 +18,7 @@ export function AcceptButton({
 
     const onClickHandler = async () => {
         try {
-            const isConfirm = window.confirm('This card will be added to you KAADO.');
+            const isConfirm = window.confirm('This card will be added to your KAADO.');
             if (!isConfirm) {
                 return;
             }

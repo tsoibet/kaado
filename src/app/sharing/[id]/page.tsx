@@ -31,7 +31,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             <TopNav left={backBtn} />
             <div className="w-full justify-self-center flex flex-col items-center gap-5">
                 <div className="w-10/12 flex flex-col items-center gap-1">
-                    <div className="text-2xl text-center">
+                    <div className="text-xl text-center">
                         {sharing.user.name} <br />
                         has shared a card with you
                     </div>
