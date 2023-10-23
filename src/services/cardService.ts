@@ -171,7 +171,7 @@ export async function updateCard(
 
         const card = await CardModel.findOneAndUpdate<ICard>(
             { _id: parsedId, user },
-            { image_front, image_back, name, type_id, number, note },
+            { image_front, image_back, name, type, number, note },
             { new: true }
         );
         if (card) {
