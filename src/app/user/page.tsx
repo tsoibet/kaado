@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { getServerSession } from 'next-auth/next';
 
 import { ChangePasswordForm } from './ChangePasswordForm';
-import { SignOutBtn } from './SignOutBtn';
+import { SignOutButton } from './SignOutButton';
 
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { TopNav } from '@/components/TopNav';
@@ -38,7 +38,7 @@ export default async function Page() {
                         />
                     </div>
                     <ChangePasswordForm updatePassword={updatePassword} />
-                    <SignOutBtn />
+                    <SignOutButton />
                 </div>
             </div>
         </div>
