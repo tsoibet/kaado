@@ -42,6 +42,9 @@ export async function createType(name: string, isDefault = false) {
         if (!user) {
             return { error: 'user not found' };
         }
+        if (!name) {
+            return { error: 'type name cannot be empty' };
+        }
 
         const type: IType = await TypeModel.create({ name, user, isDefault });
 
@@ -99,6 +102,10 @@ export async function updateType(id: string, { name }: { name?: string }) {
 
         if (!parsedId) {
             return { error: 'Type not found' };
+        }
+
+        if (!name) {
+            return { error: 'type name cannot be empty' };
         }
 
         const type = await TypeModel.findOneAndUpdate<IType>(
