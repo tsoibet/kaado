@@ -1,6 +1,5 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 
 import { ShareIcon } from '@/components/icons/ShareIcon';
@@ -14,8 +13,6 @@ export const ShareButton = ({
     const [shareMsg, setshareMsg] = useState('');
     const [isSuccess, setIsSuccess] = useState(true);
 
-    const { data: session } = useSession();
-
     const handleShareClick = async () => {
         const { sharing, error } = await getSharingData();
         if (error || !sharing) {
@@ -26,7 +23,7 @@ export const ShareButton = ({
             navigator
                 .share({
                     title: 'KAADO',
-                    text: `${session?.user.name} shared a card with you. Click the link to add the card to your KAADO`,
+                    text: `A card is shared with you. Click the link to add the card to your KAADO`,
                     url: sharingLink,
                 })
                 .then(() => {
