@@ -23,7 +23,8 @@ export const ShareButton = ({
             navigator
                 .share({
                     title: 'KAADO',
-                    text: `A card is shared with you. Click the link to add the card to your KAADO`,
+                    text: `A card has been shared with you.
+Click the link to add it to your KAADO.`,
                     url: sharingLink,
                 })
                 .then(() => {
