@@ -8,10 +8,10 @@ export function Card(props: { card: ICard }) {
     return (
         <Link
             href={`/cards/${id}`}
-            className="w-80 h-52 overflow-hidden rounded-3xl border-2 -mt-36 first:mt-0"
+            className="w-80 h-52 overflow-hidden rounded-3xl border-2 -mb-36 hover:-mb-12 transition-all"
         >
             <img
-                srcSet={image_front || 'https://placehold.co/600x400?text=Placeholder'}
+                src={image_front || 'https://placehold.co/600x400?text=Placeholder'}
                 alt="placeholder"
                 className="w-full h-full object-cover object-center"
             />
