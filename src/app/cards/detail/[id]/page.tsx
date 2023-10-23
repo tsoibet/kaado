@@ -5,10 +5,11 @@ import React from 'react';
 
 import { DeleteButton } from './DeleteButton';
 
+import { ShareButton } from '@/components/ShareButton';
 import { TopNav } from '@/components/TopNav';
 import { BackIcon } from '@/components/icons/BackIcon';
-import { ShareIcon } from '@/components/icons/ShareIcon';
 import { deleteCard, getCard } from '@/services/cardService';
+import { createSharing } from '@/services/shareService';
 import { getType } from '@/services/typeService';
 
 export default async function Page({ params }: { params: { id: string } }) {
@@ -16,6 +17,11 @@ export default async function Page({ params }: { params: { id: string } }) {
     if (!card) {
         notFound();
     }
+
+    const getSharingData = async () => {
+        'use server';
+        return await createSharing(params.id);
+    };
 
     const backBtn = (
         <Link href={`/cards/${params.id}`}>
@@ -25,10 +31,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
     const btnPanel = (
         <div className="flex gap-2">
-            <Link href="/">
-                {/* TODO: Implement share card function  */}
-                <ShareIcon />
-            </Link>
+            <ShareButton getSharingData={getSharingData} />
         </div>
     );
 
