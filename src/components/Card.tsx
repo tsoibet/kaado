@@ -3,11 +3,11 @@ import Link from 'next/link';
 import { ICard } from '../models/Card';
 
 export function Card(props: { card: ICard }) {
-    const { id, image_front } = props.card;
+    const { _id, image_front } = props.card;
 
     return (
         <Link
-            href={`/cards/${id}`}
+            href={`/cards/${_id}`}
             className="w-80 h-52 overflow-hidden rounded-3xl border-2 -mt-36 first:mt-0"
         >
             <img
