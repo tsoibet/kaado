@@ -9,6 +9,9 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import TypeModel from '@/models/Type';
 import UserModel, { IUser } from '@/models/User';
 
+const USERNAME_LENGTH = { MIN: 4, MAX: 20 };
+const PASSWORD_LENGTH = { MIN: 8, MAX: 20 };
+
 export interface UserBasicInfo {
     _id: string;
     name: string;
@@ -34,6 +37,13 @@ export async function createUser(
     password: string
 ): Promise<{ user?: UserBasicInfo; error?: string }> {
     try {
+        if (name.length < USERNAME_LENGTH.MIN || name.length > USERNAME_LENGTH.MAX) {
+            return { error: 'Please check username format' };
+        }
+
+        if (password.length < PASSWORD_LENGTH.MIN || password.length > PASSWORD_LENGTH.MAX) {
+            return { error: 'Please check password format' };
+        }
         await connectDB();
 
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -112,6 +122,9 @@ export async function updatePassword(
     newPassword: string
 ): Promise<{ user?: UserBasicInfo; error?: string }> {
     try {
+        if (newPassword.length < PASSWORD_LENGTH.MIN || newPassword.length > PASSWORD_LENGTH.MAX) {
+            return { error: 'Please check password format' };
+        }
         await connectDB();
         const session = await getServerSession(authOptions);
         if (!session) {
