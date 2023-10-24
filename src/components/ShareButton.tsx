@@ -10,7 +10,7 @@ export const ShareButton = ({
 }: {
     getSharingData: () => Promise<{ sharing?: ISharing; error?: any }>;
 }) => {
-    const [shareMsg, setshareMsg] = useState('');
+    const [shareMsg, setShareMsg] = useState('');
     const [isSuccess, setIsSuccess] = useState(true);
 
     const handleShareClick = async () => {
@@ -29,11 +29,11 @@ Click the link to add it to your KAADO.`,
                 })
                 .then(() => {
                     setIsSuccess(true);
-                    setshareMsg('Successfully shared');
+                    setShareMsg('Successfully shared');
                 })
                 .catch((e) => {
                     setIsSuccess(false);
-                    setshareMsg('Error sharing');
+                    setShareMsg('Error sharing');
                     console.error('Error sharing:', e);
                 });
         } else {
@@ -41,11 +41,11 @@ Click the link to add it to your KAADO.`,
             try {
                 await navigator.clipboard.writeText(sharingLink);
                 setIsSuccess(true);
-                setshareMsg('Copied to clipboard');
+                setShareMsg('Copied to clipboard');
                 console.log('Copied to clipboard');
             } catch (e) {
                 setIsSuccess(false);
-                setshareMsg('Error copying to clipboard');
+                setShareMsg('Error copying to clipboard');
                 console.error('Error copying to clipboard:', e);
             }
         }
@@ -56,15 +56,13 @@ Click the link to add it to your KAADO.`,
             <button onClick={handleShareClick}>
                 <ShareIcon />
             </button>
-            {shareMsg && (
-                <div
-                    className={`fixed transition-all w-max transform left-1/2 -translate-x-1/2 border px-2 py-3 ${
-                        shareMsg ? 'bottom-10' : ' -bottom-20'
-                    } ${isSuccess ? ' text-info-600' : 'text-danger-600'}`}
-                >
-                    {shareMsg}
-                </div>
-            )}
+            <div
+                className={`fixed transition-all w-max transform left-1/2 -translate-x-1/2 border px-3 py-2 text-xs bg-primary-50 ${
+                    shareMsg ? 'bottom-10' : ' -bottom-20'
+                } ${isSuccess ? ' text-info-600' : 'text-danger-600'}`}
+            >
+                {shareMsg}
+            </div>
         </>
     );
 };
