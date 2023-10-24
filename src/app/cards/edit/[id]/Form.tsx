@@ -58,10 +58,8 @@ export function Form({
     function handleImgChange(event: ChangeEvent<HTMLInputElement>) {
         const { name } = event.target;
         const file = event.target.files && event.target.files[0];
-        console.log(file);
         if (!file) {
             setCard({ ...card, [name]: '' });
-            console.log('cancel file');
             return;
         }
         const reader = new FileReader();
@@ -77,11 +75,14 @@ export function Form({
         );
     }
 
+    function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
+        const { name, value } = event.target;
+        setCard({ ...card, [name]: value });
+    }
+
     async function saveBtnClickHandler(event: React.FormEvent) {
         event.preventDefault();
         setLoading(true);
-        console.log('clicked');
-
         try {
             const { id, error } = await handleUpdateCard(new CardAdaptor(card));
 
@@ -135,7 +136,7 @@ export function Form({
                         accept="image/*"
                         onChange={(event) => handleImgChange(event)}
                         disabled={loading}
-                        className="h-0"
+                        className="h-0 w-0 hidden"
                     />
                     <label
                         htmlFor="image_front"
@@ -159,7 +160,7 @@ export function Form({
                         accept="image/*"
                         onChange={(event) => handleImgChange(event)}
                         disabled={loading}
-                        className="h-0"
+                        className="h-0 w-0 hidden"
                     />
                     <label
                         htmlFor="image_back"
@@ -174,30 +175,30 @@ export function Form({
                         />
                     </label>
                 </div>
-
                 <div className="w-full flex flex-col gap-0.5">
                     <label htmlFor="name" className="text-xs self-start">
                         CARD NAME
                     </label>
                     <input
                         id="name"
+                        name="name"
                         type="text"
                         value={card.name}
-                        onChange={(event) => setCard({ ...card, name: event.target.value })}
+                        onChange={handleInputChange}
                         disabled={loading}
                         autoComplete="off"
                         className="py-1 px-3 rounded-lg border border-primary-600"
                     />
                 </div>
-
                 <div className="w-full flex flex-col gap-0.5">
                     <label htmlFor="type" className="text-xs self-start">
                         CARD TYPE
                     </label>
                     <select
                         id="type"
+                        name="type_id"
                         value={card.type_id}
-                        onChange={(event) => setCard({ ...card, type_id: event.target.value })}
+                        onChange={handleInputChange}
                         className="py-1 px-2 rounded-lg border border-primary-600"
                     >
                         {getTypesResult.types?.map((type) => (
@@ -207,30 +208,30 @@ export function Form({
                         ))}
                     </select>
                 </div>
-
                 <div className="w-full flex flex-col gap-0.5">
                     <label htmlFor="number" className="text-xs self-start">
                         CARD NUMBER
                     </label>
                     <input
                         id="number"
+                        name="number"
                         type="text"
                         value={card.number}
-                        onChange={(event) => setCard({ ...card, number: event.target.value })}
+                        onChange={handleInputChange}
                         disabled={loading}
                         autoComplete="off"
                         className="py-1 px-3 rounded-lg border border-primary-600"
                     />
                 </div>
-
                 <div className="w-full flex flex-col gap-0.5">
                     <label htmlFor="note" className="text-xs self-start">
                         NOTE
                     </label>
                     <textarea
                         id="note"
+                        name="note"
                         value={card.note}
-                        onChange={(event) => setCard({ ...card, note: event.target.value })}
+                        onChange={handleInputChange}
                         disabled={loading}
                         rows={3}
                         className="py-1 px-3 rounded-lg border border-primary-600 resize-none"

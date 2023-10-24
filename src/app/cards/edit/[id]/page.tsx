@@ -34,6 +34,8 @@ export default async function Page({ params }: { params: { id: string } }) {
         });
         if (updatedCard) {
             revalidatePath('/');
+            revalidatePath(`/cards/${params.id}`);
+            revalidatePath(`/cards/detail/${params.id}`);
         }
         return { id: updatedCard?._id, error };
     };
