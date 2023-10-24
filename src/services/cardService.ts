@@ -20,7 +20,9 @@ export async function getCards() {
             return { error: 'User not found' };
         }
 
-        const cards = await CardModel.find<ICard>({ user }).select('_id image_front');
+        const cards = await CardModel.find<ICard>({ user }).select(
+            '_id image_front created_at type'
+        );
 
         return { cards };
     } catch (error) {
