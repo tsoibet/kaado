@@ -75,7 +75,9 @@ export function Form({
         );
     }
 
-    function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
+    function handleInputChange(
+        event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    ) {
         const { name, value } = event.target;
         setCard({ ...card, [name]: value });
     }
