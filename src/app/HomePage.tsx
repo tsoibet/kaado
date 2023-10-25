@@ -131,10 +131,10 @@ export default function HomePage({
                                     {types.map((type) => (
                                         <div
                                             key={type._id}
-                                            className="flex gap-2 px-4 py-2 text-xs text-primary-800 hover:bg-primary-200 last:border-none border-b border-b-primary-200"
+                                            className="grid grid-cols-[12px_1fr] gap-2 px-4 py-2 text-xs text-primary-800 hover:bg-primary-200 last:border-none border-b border-b-primary-200"
                                             onClick={() => handleFilterChange(type._id)}
                                         >
-                                            <div className="w-3 self-center">
+                                            <div className="self-center">
                                                 {filteredOption.includes(type._id) ? (
                                                     <CheckIcon />
                                                 ) : (
@@ -144,6 +144,14 @@ export default function HomePage({
                                             <div>{type.name}</div>
                                         </div>
                                     ))}
+                                    <span className="block bg-primary-200 h-1 w-full"></span>
+                                    <Link
+                                        className="grid grid-cols-[12px_1fr] gap-2 px-4 py-2 text-xs text-primary-800 hover:bg-primary-200 last:border-none border-b border-b-primary-200"
+                                        href={'/type'}
+                                    >
+                                        <div>&nbsp;</div>
+                                        <div>Edit</div>
+                                    </Link>
                                 </div>
                             )}
                         </div>
