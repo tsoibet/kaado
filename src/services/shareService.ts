@@ -12,6 +12,18 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { ICard } from '@/models/Card';
 import SharingModel, { ISharing } from '@/models/Sharing';
 
+export interface SharingInfo {
+    _id: string;
+    created_at: string;
+    recieved_at: string;
+    valid_until: string;
+    isComplete: boolean;
+
+    user: { name: string };
+    card: { image_front: string };
+    recipient?: { name: string };
+}
+
 export async function getSharings() {
     try {
         await connectDB();
@@ -24,10 +36,13 @@ export async function getSharings() {
             return { error: 'user not found' };
         }
 
-        const sharings = await SharingModel.find<ISharing>({ user });
+        const sharings = await SharingModel.find<SharingInfo>({ user })
+            .populate('user', 'name')
+            .populate('recipient', 'name')
+            .populate('card', 'image_front');
 
         return {
-            sharings,
+            sharings: JSON.parse(JSON.stringify(sharings)) as SharingInfo[],
         };
     } catch (error) {
         return { error };
@@ -106,14 +121,17 @@ export async function fetchSharing(id: string) {
             return { error: 'Sharing not found' };
         }
 
-        const sharing = await SharingModel.findOne<ISharing>({
+        const sharing = await SharingModel.findOne<SharingInfo>({
             _id: parsedId,
             valid_until: { $gte: new Date() },
             isComplete: false,
-        });
+        })
+            .populate('user', 'name')
+            .populate('recipient', 'name')
+            .populate('card', 'image_front');
         if (sharing) {
             return {
-                sharing,
+                sharing: JSON.parse(JSON.stringify(sharing)) as SharingInfo,
             };
         } else {
             return { error: 'Sharing not found' };
@@ -137,7 +155,11 @@ export async function executeSharing(id: string) {
             return { error: 'user not found' };
         }
 
-        const { sharing } = await fetchSharing(id);
+        const sharing = await SharingModel.findOne<ISharing>({
+            _id: id,
+            valid_until: { $gte: new Date() },
+            isComplete: false,
+        });
 
         if (!sharing) {
             return { error: 'Sharing not found' };
