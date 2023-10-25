@@ -2,17 +2,24 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import React from 'react';
 
+import { ShareButton } from '../../../components/ShareButton';
+
 import { TopNav } from '@/components/TopNav';
 import { BackIcon } from '@/components/icons/BackIcon';
 import { InfoIcon } from '@/components/icons/InfoIcon';
-import { ShareIcon } from '@/components/icons/ShareIcon';
 import { getCard } from '@/services/cardService';
+import { createSharing } from '@/services/shareService';
 
 export default async function Page({ params }: { params: { id: string } }) {
     const { card } = await getCard(params.id);
     if (!card) {
         notFound();
     }
+
+    const getSharingData = async () => {
+        'use server';
+        return await createSharing(params.id);
+    };
 
     const backBtn = (
         <Link href="/">
@@ -22,10 +29,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
     const btnPanel = (
         <div className="flex gap-2">
-            <Link href="/">
-                {/* TODO: Implement share card function  */}
-                <ShareIcon />
-            </Link>
+            <ShareButton getSharingData={getSharingData} />
             <Link href={`/cards/detail/${params.id}`}>
                 <InfoIcon />
             </Link>
