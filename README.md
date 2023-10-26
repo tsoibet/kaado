@@ -47,8 +47,6 @@ A web-based card holder where users can store their paper member cards and say g
 <!-- GETTING STARTED -->
 ## Getting Started
 
-*Prerequisites*
-
 **Prerequisites:** You will need to have docker installed.
 
 1. Clone the repo 
@@ -56,12 +54,12 @@ A web-based card holder where users can store their paper member cards and say g
    git clone https://github.com/tsoibet/kaado.git && cd kaado
    ```
 
-2. Build docker images:
+2. Build docker images
     ```sh
     docker compose build
     ```
 
-3. Run the docker images:
+3. Run the docker images
     ```sh
     docker compose up -d
     ```
