@@ -13,5 +13,6 @@ const typeSchema: Schema = new Schema({
     name: { type: String, required: true },
     isDefault: { type: Boolean, require: true },
 });
+typeSchema.index({ user: 1, name: 1 }, { unique: true });
 
 export default mongoose.models.Type || mongoose.model<IType>('Type', typeSchema);

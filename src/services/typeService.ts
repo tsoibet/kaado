@@ -51,7 +51,10 @@ export async function createType(name: string, isDefault = false) {
         return {
             type,
         };
-    } catch (error) {
+    } catch (error: any) {
+        if (error.code === 11000) {
+            return { error: 'type name already exists' };
+        }
         return { error };
     }
 }
@@ -121,7 +124,10 @@ export async function updateType(id: string, { name }: { name?: string }) {
         } else {
             return { error: 'Type not found' };
         }
-    } catch (error) {
+    } catch (error: any) {
+        if (error.code === 11000) {
+            return { error: 'type name already exists' };
+        }
         return { error };
     }
 }
