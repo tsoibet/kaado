@@ -4,7 +4,7 @@ export function BackIcon() {
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            strokeWidth={2}
+            strokeWidth={1.8}
             stroke="currentColor"
             className="homebtn p-1"
         >

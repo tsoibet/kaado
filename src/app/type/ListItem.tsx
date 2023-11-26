@@ -9,7 +9,7 @@ interface ListItemProps {
 
 export function ListItem({ type }: ListItemProps) {
     return (
-        <div className="flex justify-between border px-5 py-3 -mt-px">
+        <div className="flex justify-between border border-primary-600 px-5 py-3 -mt-px">
             <div>{type.name} </div>
             <Link href={`/type/${type._id}`}>
                 <PencilIcon />

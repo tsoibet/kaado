@@ -8,7 +8,7 @@ import { ReactNode } from 'react';
 export function TopNav(props: { left?: JSX.Element & ReactNode; right?: JSX.Element & ReactNode }) {
     const router = useRouter();
 
-    const leftBtn = props.left ?? <div onClick={() => router.back()}>← Back</div>;
+    const leftBtn = props.left ?? <div onClick={() => router.back()}>Back</div>;
 
     return (
         <div className="flex justify-between items-center">

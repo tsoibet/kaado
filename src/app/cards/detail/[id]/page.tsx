@@ -53,7 +53,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             <TopNav left={backBtn} right={btnPanel} />
             <div className="w-full justify-self-center flex flex-col items-center gap-5">
                 <div className="w-10/12 flex flex-col items-center gap-1">
-                    <div className="w-36 h-24 overflow-hidden rounded-xl border">
+                    <div className="w-36 h-24 overflow-hidden rounded-xl border border-primary-400">
                         <img
                             srcSet={card?.image_front || 'https://placehold.co/600x400?text=Error'}
                             alt="placeholder"
