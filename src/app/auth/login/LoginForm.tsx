@@ -26,11 +26,11 @@ export function LoginForm() {
                 password: formValues.password,
                 callbackUrl,
             });
-            setLoading(false);
 
             if (res && !res.error) {
                 router.replace(callbackUrl);
             } else {
+                setLoading(false);
                 setErrorMsg('Username or passward is incorrect.');
             }
         } catch (error: any) {

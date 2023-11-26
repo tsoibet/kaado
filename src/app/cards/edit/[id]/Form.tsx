@@ -88,11 +88,11 @@ export function Form({
         try {
             const { id, error } = await handleUpdateCard(new CardAdaptor(card));
 
-            setLoading(false);
             if (id) {
                 router.replace(`/cards/detail/${id}`);
             }
             if (error) {
+                setLoading(false);
                 setErrorMsg(error);
             }
             return;
