@@ -79,11 +79,11 @@ export function Form({
         try {
             const { id, error } = await handleCreateCard(new CardAdaptor(card));
 
-            setLoading(false);
             if (id) {
                 router.replace(`/cards/${id}`);
             }
             if (error) {
+                setLoading(false);
                 setErrorMsg(error);
             }
             return;
@@ -123,7 +123,7 @@ export function Form({
             return (
                 <input
                     type="submit"
-                    className={`${loading ? 'text-primary-600' : 'text-info-600'}`}
+                    className={`${loading ? 'text-primary-600' : 'text-info-600 cursor-pointer'}`}
                     disabled={loading}
                     value={loading ? 'loading...' : 'Add'}
                 />
