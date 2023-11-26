@@ -155,7 +155,7 @@ export function Form({
                     id="imagePreview"
                     src={card.image_front || 'https://placehold.co/793x500?text=Front'}
                     alt="Image Preview"
-                    className="w-80 h-52 overflow-hidden rounded-3xl border-2 object-cover object-center"
+                    className="w-80 h-52 overflow-hidden rounded-3xl border border-primary-400 object-cover object-center"
                 />
                 <p className="text-sm text-danger-600">{errorMsg}</p>
             </div>
@@ -179,7 +179,7 @@ export function Form({
                     id="imagePreview"
                     src={card.image_back || 'https://placehold.co/793x500?text=Back'}
                     alt="Image Preview"
-                    className="w-80 h-52 overflow-hidden rounded-3xl border-2 object-cover object-center"
+                    className="w-80 h-52 overflow-hidden rounded-3xl border border-primary-400 object-cover object-center"
                 />
                 <p className="h-5 text-sm text-danger-600">{errorMsg}</p>
             </div>
@@ -256,7 +256,10 @@ export function Form({
             inputfields = (
                 <>
                     <p className="h-5 text-sm text-danger-600">Error: Unable to add card details</p>
-                    <p className="h-5 text-sm text-center text-danger-600">Please try again later. <br/>You may still add the card with photos only.</p>
+                    <p className="h-5 text-sm text-center text-danger-600">
+                        Please try again later. <br />
+                        You may still add the card with photos only.
+                    </p>
                 </>
             );
         }

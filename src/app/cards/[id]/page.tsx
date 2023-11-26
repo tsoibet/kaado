@@ -40,7 +40,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         <div className="w-96 min-h-screen p-4 grid grid-rows-[auto_1fr] gap-10">
             <TopNav left={backBtn} right={btnPanel} />
             <div className="justify-self-center flex flex-col gap-10">
-                <div className="w-80 h-52 overflow-hidden rounded-3xl border-2">
+                <div className="w-80 h-52 overflow-hidden rounded-3xl border border-primary-400">
                     <img
                         srcSet={card?.image_front || 'https://placehold.co/600x400?text=Error'}
                         alt="placeholder"
@@ -48,7 +48,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                     />
                 </div>
                 {card?.image_back && (
-                    <div className="w-80 h-52 overflow-hidden rounded-3xl border-2">
+                    <div className="w-80 h-52 overflow-hidden rounded-3xl border border-primary-400">
                         <img
                             srcSet={card.image_back || 'https://placehold.co/600x400?text=Error'}
                             alt="placeholder"

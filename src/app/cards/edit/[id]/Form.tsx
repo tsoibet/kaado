@@ -142,7 +142,7 @@ export function Form({
                     />
                     <label
                         htmlFor="image_front"
-                        className={`w-36 h-24 overflow-hidden rounded-xl border ${
+                        className={`w-36 h-24 overflow-hidden rounded-xl border border-primary-400 ${
                             !loading && 'cursor-pointer'
                         }`}
                     >
@@ -166,7 +166,7 @@ export function Form({
                     />
                     <label
                         htmlFor="image_back"
-                        className={`w-36 h-24 overflow-hidden rounded-xl border ${
+                        className={`w-36 h-24 overflow-hidden rounded-xl border border-primary-400 ${
                             !loading && 'cursor-pointer'
                         }`}
                     >

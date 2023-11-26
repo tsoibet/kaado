@@ -51,21 +51,24 @@ export const Form = ({
     return (
         <>
             <TopNav right={getAddBtn()} />
-            <div className="text-center">
-                <div className="text-2xl m-4">Add New Card Type</div>
-                <div className="text-2xl m-4 mt-8">Card Type Name</div>
-                <div>
+            <div className="w-10/12 justify-self-center flex flex-col items-center gap-5">
+                <div className="text-2xl p-4">Add New Card Type</div>
+                <div className="w-full flex flex-col gap-0.5">
+                    <label htmlFor="typeName" className="text-xs self-start">
+                        CARD TYPE NAME
+                    </label>
                     <input
                         required
                         type="name"
                         name="typeName"
                         value={typeName}
                         onChange={(evt) => setTypeName(evt.target.value)}
-                        className="border text-center"
+                        className="py-1 px-3 rounded-lg border border-primary-600"
                         disabled={loading}
                     />
                 </div>
-                {errorMsg && <p className="text-center bg-red-300 py-4 mb-6 rounded">{errorMsg}</p>}
+
+                <p className="text-xs text-danger-600 h-4">{errorMsg}</p>
             </div>
         </>
     );

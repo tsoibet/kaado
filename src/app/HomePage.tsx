@@ -20,6 +20,18 @@ export default function HomePage({
 }) {
     const sortOptions = [
         {
+            name: 'By date created Asc',
+            func: (a: ICard, b: ICard) => {
+                return a.created_at > b.created_at ? 1 : -1;
+            },
+        },
+        {
+            name: 'By date created Desc',
+            func: (a: ICard, b: ICard) => {
+                return a.created_at > b.created_at ? -1 : 1;
+            },
+        },
+        {
             name: 'By type Asc',
             func: (a: ICard, b: ICard) => {
                 return a.type > b.type ? 1 : -1;
@@ -29,18 +41,6 @@ export default function HomePage({
             name: 'By type Desc',
             func: (a: ICard, b: ICard) => {
                 return a.type > b.type ? -1 : 1;
-            },
-        },
-        {
-            name: 'By Creation Date Asc',
-            func: (a: ICard, b: ICard) => {
-                return a.created_at > b.created_at ? 1 : -1;
-            },
-        },
-        {
-            name: 'By Creation Date Desc',
-            func: (a: ICard, b: ICard) => {
-                return a.created_at > b.created_at ? -1 : 1;
             },
         },
     ];
