@@ -28,8 +28,8 @@ export const Form = ({
         try {
             const { error } = await editType(typeName);
 
-            setLoading(false);
             if (error) {
+                setLoading(false);
                 setErrorMsg(error);
                 return;
             }

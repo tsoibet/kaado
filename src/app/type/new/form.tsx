@@ -25,8 +25,8 @@ export const Form = ({
         try {
             const { error } = await createNewType(typeName);
 
-            setLoading(false);
             if (error) {
+                setLoading(false);
                 setErrorMsg(error);
                 return;
             }
